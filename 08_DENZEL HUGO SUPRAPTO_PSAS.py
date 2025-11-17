@@ -74,27 +74,27 @@ def buat_form_input():
             kelas = combo_kelas.get()
             meal = var_meal.get()
             if not nama:
-                status_label.config(text="Nama harus diisi!")
+                status_label.config(text="Tolong nama diisi.")
                 return
             if umur <= 0:
-                status_label.config(text="Umur harus > 0!")
+                status_label.config(text="Umur harus lebih dari 0.")
                 return
             if harga <= 0:
-                status_label.config(text="Harga harus > 0!")
+                status_label.config(text="Harga harus lebih dari 0.")
                 return
             if not kelas:
-                status_label.config(text="Pilih kelas!")
+                status_label.config(text="Tolong pilih kelas.")
                 return
             data = {'nama_penumpang': nama, 'umur': umur, 'harga_tiket': harga, 'kelas': kelas, 'meal': meal}
             if tambah_data(data):
-                status_label.config(text="Data berhasil ditambahkan!")
+                status_label.config(text="Data berhasil ditambahkan.")
                 entry_nama.delete(0, tk.END)
                 entry_umur.delete(0, tk.END)
                 entry_harga.delete(0, tk.END)
                 combo_kelas.set('')
                 var_meal.set(False)
         except ValueError:
-            status_label.config(text="Error: Umur dan harga harus angka!")
+            status_label.config(text="Umur dan harga harus angka.")
           
     tk.Button(frame, text="Simpan Data", width=15, command=simpan_data).pack()
     tk.Button(frame, text="Kembali", width=15, command=lambda: tampilkan_halaman("utama")).pack()
@@ -102,7 +102,7 @@ def buat_form_input():
 
 def buat_tampil_data():
     frame = tk.Frame(container)
-    tk.Label(frame, text="Tampil Data Pemesanan", font=("Merriweather", 14)).pack()
+    tk.Label(frame, text="Tampilan Data Pemesanan", font=("Merriweather", 14)).pack()
     info_label = tk.Label(frame, text="")
     info_label.pack()
     table_frame = tk.Frame(frame)
@@ -173,7 +173,7 @@ def buat_hasil_laporan():
     label_jumlah.pack()
     label_pendapatan = tk.Label(frame, text="Total Pendapatan: Rp 0")
     label_pendapatan.pack()
-    label_rata_harga = tk.Label(frame, text="Rata-rata Harga: Rp 0")
+    label_rata_harga = tk.Label(frame, text="Rata-Rata Harga: Rp 0")
     label_rata_harga.pack()
     tk.Label(frame, text="Distribusi Kelas:", font=("Merriweather", 12)).pack()
     kelas_frame = tk.Frame(frame)
