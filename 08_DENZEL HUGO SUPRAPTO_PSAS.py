@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 
 data_pemesanan = []
-current_frame = None
 frames = {}
 root = tk.Tk()
 root.title("Aplikasi Pemesanan Tiket Pesawat")
@@ -11,11 +10,9 @@ container = tk.Frame(root)
 container.pack()
 
 def tampilkan_halaman(page_name):
-    global current_frame
-    if current_frame:
-        current_frame.pack_forget()
-    current_frame = frames[page_name]
-    current_frame.pack()
+    for frame in frames.values():
+        frame.pack_forget()
+    frames[page_name].pack()
 
 def tambah_data(data):
     data_pemesanan.append(data)
@@ -121,7 +118,7 @@ def buat_tampil_data():
         for item in tree.get_children():
             tree.delete(item)
         for data in data_pemesanan:
-            tree.insert("", "end", values=( data['nama_penumpang'], data['umur'], f"Rp {data['harga_tiket']:,.0f}", data['kelas'], "Ya" if data['meal'] else "Tidak"))
+            tree.insert("", "end", values=( data['nama_penumpang'], data['umur'], f"Rp {data['harga_tiket']:0f}", data['kelas'], "Ya" if data['meal'] else "Tidak"))
         info_label.config(text=f"Total: {len(data_pemesanan)} data")
     
     tk.Button(frame, text="Refresh Data", width=15, command=refresh_data).pack()
@@ -158,7 +155,7 @@ def buat_pencarian_data():
         if nama:
             hasil = cari_data(nama)
             for data in hasil:
-                tree.insert("", "end", values=(data['nama_penumpang'], data['umur'], f"Rp {data['harga_tiket']:,.0f}", data['kelas'], "Ya" if data['meal'] else "Tidak"))
+                tree.insert("", "end", values=(data['nama_penumpang'], data['umur'], f"Rp {data['harga_tiket']:0f}", data['kelas'], "Ya" if data['meal'] else "Tidak"))
             info_label.config(text=f"Ditemukan {len(hasil)} hasil")
         else:
             info_label.config(text="Masukkan nama!")
@@ -192,8 +189,8 @@ def buat_hasil_laporan():
         total = hitung_total_pendapatan()
         rata = total / jumlah if jumlah > 0 else 0
         label_jumlah.config(text=f"Jumlah Pemesanan: {jumlah}")
-        label_pendapatan.config(text=f"Total Pendapatan: Rp {total:,.0f}")
-        label_rata_harga.config(text=f"Rata-rata Harga: Rp {rata:,.0f}")
+        label_pendapatan.config(text=f"Total Pendapatan: Rp {total:0f}")
+        label_rata_harga.config(text=f"Rata-rata Harga: Rp {rata:0f}")
         for kelas, label in zip(["Ekonomi", "Bisnis", "First Class"], [label_ekonomi, label_bisnis, label_first]):
             count = sum(1 for d in data_pemesanan if d['kelas'] == kelas)
             label.config(text=f"{kelas}: {count}")
